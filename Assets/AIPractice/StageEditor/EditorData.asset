@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6924d9b1633ff5845a0f403056b90549, type: 3}
+  m_Name: EditorData
+  m_EditorClassIdentifier: 
+  EditorSceneAsset: {fileID: 102900000, guid: fedb8a9198cf9824594180d6b9f2b4b4, type: 3}
+  JsonStageDataPath: {fileID: 102900000, guid: 554997b206cf6a9478f6b05b5744534f, type: 3}
+  StageDataSOPath: {fileID: 102900000, guid: 34c1124820490aa4ab0d65fa32302221, type: 3}
+  FloorPrefab: {fileID: 6760156441651221053, guid: 0c52dc8aa3ef0cb48b127dcd2f302b75,
+    type: 3}
