@@ -1,49 +1,31 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using CollectItem.Collecter;
 using CollectItem.Stage;
 using UnityEngine;
 
-namespace CollectItem.Collecter.NPC
+namespace CollectItem.Thread
 {
-    public class NPCCollecter : CollecterBase
+    public class Threat : MonoBehaviour
     {
-        private NPCStatesSO _npcStatesSO;
-        private StageUpdaterSO _stageUpdaterSO;
-        private bool _isInitialize = false;
+        [SerializeField] private StageUpdaterSO _stageUpdaterSO;
+        [SerializeField] private float _waitTime = 1.5f;
 
-        private Vector3 _nextPos;
         private Vector2Int _setPos;
-
+        private Vector3 _nextPos;
         private float _lastMoveTime;
-        
-        public void SetData(NPCStatesSO npcStatesSo, StageUpdaterSO stageUpdaterSo, Vector3 spawnPos)
+
+        private void Start()
         {
-            _npcStatesSO = npcStatesSo;
-            _stageUpdaterSO = stageUpdaterSo;
-            _isInitialize = true;
-            _lastMoveTime = Time.time - _npcStatesSO.WaitTime;
-            SetData(_npcStatesSO.DownTime, spawnPos);
+            _lastMoveTime = Time.time - _waitTime;
+            
         }
 
-        private void OnEnable()
+        private void Update()
         {
-            FinishThreatDownEvent += FinishThreatDown;
-        }
-        
-        private void OnDisable()
-        {
-            FinishThreatDownEvent -= FinishThreatDown;
-        }
-
-        protected override void Update()
-        {
-            base.Update();
-            
-            if (!_isInitialize) return;
-            if (!_canMove) return;
-            
-            if (Time.time - _lastMoveTime >= _npcStatesSO.WaitTime)
+            if (Time.time - _lastMoveTime >= _waitTime)
             {
                 Move();
                 _lastMoveTime = Time.time;
@@ -51,31 +33,25 @@ namespace CollectItem.Collecter.NPC
             else
             {
                 //現在の経過時間と移動時間の割合を求め、現在位置の補完
-                float rate = (Time.time - _lastMoveTime) / _npcStatesSO.WaitTime;
+                float rate = (Time.time - _lastMoveTime) / _waitTime;
                 transform.position = Vector3.Lerp(transform.position, _nextPos, rate);
             }
         }
 
-        public override void HitThreat()
+        private void OnTriggerEnter(Collider other)
         {
-            base.HitThreat();
-            _stageUpdaterSO.RemoveCollectorPos(_setPos);
+            if(other.TryGetComponent<ICollecter>(out var collecter))
+            {
+                collecter.HitThreat();
+            }
         }
-        
-        private void FinishThreatDown()
-        {
-            _setPos = new Vector2Int((int)_SpawnPos.x, (int)_SpawnPos.z);
-            _stageUpdaterSO.SetCollectorPos(_setPos);
-            transform.position = _SpawnPos;
-        }
-        
+
         private void Move()
         {
-            _stageUpdaterSO.RemoveCollectorPos(_setPos);
             var pos = transform.position;
             var currentPos = new Vector2Int((int)pos.x, (int)pos.z);
-            if(_stageUpdaterSO.GetSynthesisMap == null) return;
-            float[,] dijkstraMap = _stageUpdaterSO.GetSynthesisMap(_npcStatesSO.ThreatWeight);
+            if(_stageUpdaterSO.GetCollectorMap == null) return;
+            float[,] dijkstraMap = _stageUpdaterSO.GetCollectorMap();
             _setPos = GetNextMoveNodes(dijkstraMap, currentPos);
             Vector2 nextPos = _setPos;
             if (_stageUpdaterSO.GetMapOffset != null)
@@ -84,7 +60,7 @@ namespace CollectItem.Collecter.NPC
             }
             //transform.position = new Vector3(nextPos.x, pos.y, nextPos.y);
             _nextPos = new Vector3(nextPos.x, pos.y, nextPos.y);
-            _stageUpdaterSO.SetCollectorPos(_setPos);
+            _stageUpdaterSO?.SetThreatPosition(_setPos);
         }
         
         private Vector2Int GetNextMoveNodes(float[,] dijkstraMap, Vector2Int currentPos)
