@@ -120,6 +120,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _npcStatesSO:
   - {fileID: 11400000, guid: 031ae0e7a57ef264bb45e87f82ac4a4a, type: 2}
+  - {fileID: 11400000, guid: 20d783efc3fbcd1499674ac492b0e8d5, type: 2}
+  - {fileID: 11400000, guid: 96da0d03d950bf74dab0b55322b86f10, type: 2}
   _npcPrefab: {fileID: 8300053432065420840, guid: 3118bbc0e7abcd444a675d755bd7d71c,
     type: 3}
   _stageUpdaterSO: {fileID: 11400000, guid: 867713e69d7375f49b3216aa4b70c8f1, type: 2}

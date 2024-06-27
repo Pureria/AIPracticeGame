@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3008fed9b7071ed4ba02ce5e20b71cd8, type: 3}
-  m_Name: NPCStatesSO
+  m_Name: NPCStatesSO 1
   m_EditorClassIdentifier: 
-  WaitTime: 0.4
-  ThreatWeight: 0.6
-  DownTime: 3
+  WaitTime: 0.35
+  ThreatWeight: 0.3
+  DownTime: 5

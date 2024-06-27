@@ -2071,6 +2071,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DummyThreat
       objectReference: {fileID: 0}
+    - target: {fileID: 338360792781503467, guid: fe7dedf2ac5ae6f4389b8e4582459933,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6104087477387923005, guid: fe7dedf2ac5ae6f4389b8e4582459933,
         type: 3}
       propertyPath: m_LocalPosition.x
